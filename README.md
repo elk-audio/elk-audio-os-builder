@@ -18,8 +18,8 @@ Run the container
 
 Build the image (Raspberrypi4 with ELK Audio OS 1.0.0 shown)
   ```
-  git clone https://github.com/elk-audio/kas-configs
-  cd kas-configs
+  git clone https://github.com/elk-audio/elk-audio-kas-configs
+  cd elk-audio-kas-configs
   run-kas build raspberrypi4/raspberrypi4-elk-audio-os-v1.0.0.yml
   ```
 

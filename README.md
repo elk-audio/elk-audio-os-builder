@@ -27,3 +27,6 @@ Build the image (Raspberrypi4 with ELK Audio OS 1.0.0 shown)
   ```
   run-kas build raspberrypi4/raspberrypi4-elk-audio-os-v1.0.0.yml -c populate_sdk
   ```
+
+Copyright 2017-2023 Elk Audio AB, Stockholm, Sweden
+

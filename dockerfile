@@ -103,7 +103,10 @@ RUN rm -rf "/var/lib/apt/lists/*"
 RUN pip3 install --no-input distro jsonschema PyYAML kconfiglib
 
 # Clone KAS repository
-RUN git clone https://github.com/siemens/kas.git /opt/kas
+RUN git clone https://github.com/siemens/kas.git /opt/kas && \
+    cd /opt/kas && \
+    git fetch --all --tags && \
+    git checkout tags/4.0
 
 # Create user without password
 RUN \

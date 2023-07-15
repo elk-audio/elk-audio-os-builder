@@ -10,6 +10,7 @@ ARG USERNAME=yoctouser
 ARG GROUPNAME=yocto
 ARG UID=1000
 ARG GID=1000
+ARG SDK_VERSION=1.0.0
 
 # Set shell
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
@@ -107,6 +108,11 @@ RUN git clone https://github.com/siemens/kas.git /opt/kas && \
     cd /opt/kas && \
     git fetch --all --tags && \
     git checkout tags/4.0
+
+RUN wget https://github.com/elk-audio/elkpi-sdk/releases/download/${SDK_VERSION}/elk-glibc-x86_64-elkpi-audio-os-image-cortexa72-raspberrypi4-64-toolchain-${SDK_VERSION}.sh && \
+    chmod +x elk-glibc-x86_64-elkpi-audio-os-image-cortexa72-raspberrypi4-64-toolchain-${SDK_VERSION}.sh && \
+    ./elk-glibc-x86_64-elkpi-audio-os-image-cortexa72-raspberrypi4-64-toolchain-${SDK_VERSION}.sh -y && \
+    rm elk-glibc-x86_64-elkpi-audio-os-image-cortexa72-raspberrypi4-64-toolchain-${SDK_VERSION}.sh
 
 # Create user without password
 RUN \

@@ -13,11 +13,15 @@ Configure and install the docker image on your system
   docker image build -t elk-audio-os-builder .
   ```
 
+(if you're running Docker Desktop on a Silicon Mx Mac, add the option `--platform linux/amd64` after build).
+
 Run the container
   ```
-  sudo docker run --name elk-audio-os -d --rm -it elk-audio-os-builder
+  sudo docker run --name elk-audio-os -dit --rm elk-audio-os-builder
   sudo docker attach elk-audio-os
   ```
+
+(you only need sudo with Docker engine on Linux, but not on Docker Desktop for Mac/Windows).
 
 # Compile the JUCE AudioPlugin example
 
@@ -27,6 +31,7 @@ You can test it with
   ```
   cd ~/examples
   mkdir build && cd build
+  source /SDKs/elkpi/environment-setup-cortexa72-elk-linux
   cmake -DCMAKE_BUILD_TYPE=Release ..
   make -j`nproc`
   ```
@@ -45,5 +50,5 @@ Build the image (Raspberrypi4 with ELK Audio OS 1.0.0 shown)
   run-kas build raspberrypi4/raspberrypi4-elk-audio-os-v1.0.0.yml -c populate_sdk
   ```
 
-Copyright 2017-2023 Elk Audio AB, Stockholm, Sweden
+Copyright 2017-2024 Elk Audio AB, Stockholm, Sweden
 

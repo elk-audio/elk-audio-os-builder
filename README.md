@@ -21,7 +21,9 @@ Run the container
   sudo docker attach elk-audio-os
   ```
 
-(you only need sudo with Docker engine on Linux, but not on Docker Desktop for Mac/Windows).
+You only need sudo with Docker engine on Linux, but not on Docker Desktop for Mac/Windows.
+
+If you're on Apple Silicon, you need again to pass the option `--platform linux/amd64` to the docker run command.
 
 # Compile the JUCE AudioPlugin example
 

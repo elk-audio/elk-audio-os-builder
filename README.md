@@ -31,8 +31,8 @@ Inside the home directory of the container, there is a modified version of JUCE'
 
 You can test it with
   ```
-  cd ~/examples
-  mkdir build && cd build
+  cd ~/examples/AudioPlugin
+  mkdir -p build && cd build
   source /SDKs/elkpi/environment-setup-cortexa72-elk-linux
   cmake -DCMAKE_BUILD_TYPE=Release ..
   make -j`nproc`

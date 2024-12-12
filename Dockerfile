@@ -8,7 +8,7 @@ FROM ubuntu:22.04
 # Define variables used in the Dockerfile
 ARG USERNAME=yoctouser
 ARG GROUPNAME=yocto
-ARG UID=2001
+ARG UID=1000
 ARG GID=1000
 
 ARG ELK_SDK_DOWNLOAD_URL="https://github.com/elk-audio/elkpi-sdk/releases/download/1.0.0/elk-glibc-x86_64-elkpi-audio-os-image-cortexa72-raspberrypi4-64-toolchain-1.0.0.sh"

@@ -122,7 +122,7 @@ RUN pip3 install --no-input distro jsonschema PyYAML kconfiglib
 RUN git clone https://github.com/siemens/kas.git /opt/kas && \
     cd /opt/kas && \
     git fetch --all --tags && \
-    git checkout tags/4.0
+    git checkout tags/4.7
 
 # Download and setup Elk SDK
 WORKDIR /tmp

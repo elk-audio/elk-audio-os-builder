@@ -11,7 +11,7 @@ ARG GROUPNAME=yocto
 ARG UID=1000
 ARG GID=1000
 
-ARG ELK_SDK_DOWNLOAD_URL="https://github.com/elk-audio/elkpi-sdk/releases/download/1.0.0/elk-glibc-x86_64-elkpi-audio-os-image-cortexa72-raspberrypi4-64-toolchain-1.0.0.sh"
+ARG ELK_SDK_DOWNLOAD_URL="https://github.com/elk-audio/elkpi-sdk/releases/download/1.1.0/elk-glibc-x86_64-elkpi-audio-os-image-cortexa72-raspberrypi4-64-toolchain-1.1.0.sh"
 ARG JUCE_DOWNLOAD_URL="https://github.com/juce-framework/JUCE/releases/download/8.0.4/juce-8.0.4-linux.zip"
 ARG ELK_SDK_BASEPATH=/SDKs/elkpi/
 ARG ELK_SDK_USR_SYSROOT=sysroots/cortexa72-elk-linux/usr

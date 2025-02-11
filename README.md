@@ -40,17 +40,17 @@ You can test it with
 
 # Build a full Yocto image for Elk Audio OS
 
-Build the image (Raspberrypi4 with ELK Audio OS 1.0.0 shown)
+Build the image (Raspberrypi4 with ELK Audio OS 1.1.0 shown)
   ```
   git clone https://github.com/elk-audio/elk-audio-kas-configs
   cd elk-audio-kas-configs
-  run-kas build raspberrypi4/raspberrypi4-elk-audio-os-v1.0.0.yml
+  run-kas build raspberrypi4/raspberrypi4-elk-audio-os-v1.1.0.yml
   ```
 
   If you need to build the SDK run
   ```
-  run-kas build raspberrypi4/raspberrypi4-elk-audio-os-v1.0.0.yml -c populate_sdk
+  run-kas build raspberrypi4/raspberrypi4-elk-audio-os-v1.1.0.yml -c populate_sdk
   ```
 
-Copyright 2017-2024 Elk Audio AB, Stockholm, Sweden
+Copyright 2017-2025 Elk Audio AB, Stockholm, Sweden
 

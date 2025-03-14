@@ -115,6 +115,9 @@ RUN \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+# Install aws-cli 
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sudo ./aws/install
+
 # Install python pakages required by KAS
 RUN pip3 install --no-input distro jsonschema PyYAML kconfiglib
 

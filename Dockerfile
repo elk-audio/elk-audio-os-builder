@@ -11,8 +11,8 @@ ARG GROUPNAME=yocto
 ARG UID=1000
 ARG GID=1000
 
-ARG ELK_SDK_DOWNLOAD_URL="https://github.com/elk-audio/elkpi-sdk/releases/download/1.1.0/elk-glibc-x86_64-elkpi-audio-os-image-cortexa72-raspberrypi4-64-toolchain-1.1.0.sh"
-ARG JUCE_DOWNLOAD_URL="https://github.com/juce-framework/JUCE/releases/download/8.0.4/juce-8.0.4-linux.zip"
+ARG ELK_SDK_DOWNLOAD_URL="https://github.com/elk-audio/elkpi-sdk/releases/download/1.2.1/elk-glibc-x86_64-elkpi-audio-os-image-cortexa72-raspberrypi4-64-toolchain-v1.2.1.sh"
+ARG JUCE_DOWNLOAD_URL="https://github.com/juce-framework/JUCE/releases/download/8.0.12/juce-8.0.12-linux.zip"
 ARG ELK_SDK_BASEPATH=/SDKs/elkpi/
 ARG ELK_SDK_USR_SYSROOT=sysroots/cortexa72-elk-linux/usr
 
@@ -37,9 +37,9 @@ RUN \
  locale-gen
 
 ENV TZ=Europe/Rome
-ENV LC_ALL en_US.UTF-8 
-ENV LANG en_US.UTF-8  
-ENV LANGUAGE en_US:en  
+ENV LC_ALL en_US.UTF-8
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
 
 # Install required packages
 RUN \
@@ -131,7 +131,6 @@ RUN wget -O elkpi-sdk.sh $ELK_SDK_DOWNLOAD_URL && \
     /tmp/elkpi-sdk.sh -y -d $ELK_SDK_BASEPATH && \
     rm -f elkpi-sdk.sh
 
-
 # Create user without password
 RUN \
  useradd -rm -d /home/$USERNAME -s /bin/bash -G sudo -g $GROUPNAME -u $UID $USERNAME && \
@@ -145,13 +144,7 @@ RUN touch /home/$USERNAME/.sudo_as_admin_successful
 # Setup JUCE inside SDK and example project in user directory
 RUN wget -O juce.zip $JUCE_DOWNLOAD_URL && \
     unzip juce.zip && \
-    cd JUCE && \
-    mkdir build && \
-    cd build && \
-    cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$ELK_SDK_BASEPATH/$ELK_SDK_USR_SYSROOT/ .. && \
-    make -j 4 && \
-    make install && \
-    cd ../examples/CMake && \
+    cd JUCE/examples/CMake && \
     mkdir -p /home/$USERNAME/examples && \
     cp -r AudioPlugin /home/$USERNAME/examples
 
@@ -182,9 +175,6 @@ RUN unix2dos CMakeLists.txt && \
     rm -f CMakeLists.txt.orig && \
     rm -rdf /tmp/JUCE && \
     rm -f /tmp/juce.zip
-
-# Install aws-cli 
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" && unzip awscliv2.zip && sudo ./aws/install
 
 # Set file permissions
 RUN chown -R $USERNAME:$GROUPNAME /home/$USERNAME

@@ -54,13 +54,13 @@ docker run --name elk-audio-os -it --rm -v ./elk-yocto-build:/elk-yocto-build -w
 Build the image (Raspberrypi4 with ELK Audio OS 1.1.0 shown)
 ```shell
 git clone https://github.com/elk-audio/elk-audio-kas-configs
-run-kas build elk-audio-kas-configs/raspberrypi4/raspberrypi4-elk-audio-os-v1.1.0.yml
+run-kas build elk-audio-kas-configs/raspberrypi4/raspberrypi4-elk-audio-os-v1.2.1.yml
 ```
 
 If you need to build the SDK run
 ```shell
-run-kas build elk-audio-kas-configs/raspberrypi4/raspberrypi4-elk-audio-os-v1.1.0.yml -c populate_sdk
+run-kas build elk-audio-kas-configs/raspberrypi4/raspberrypi4-elk-audio-os-v1.2.1.yml -c populate_sdk
 ```
 
 
-Copyright 2017-2025 Elk Audio AB, Stockholm, Sweden
+Copyright 2017-2026 Elk Audio AB, Stockholm, Sweden

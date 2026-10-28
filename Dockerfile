@@ -11,8 +11,8 @@ ARG GROUPNAME=yocto
 ARG UID=1000
 ARG GID=1000
 
-ARG ELK_SDK_DOWNLOAD_URL="https://github.com/elk-audio/elkpi-sdk/releases/download/1.2.1/elk-glibc-x86_64-elkpi-audio-os-image-cortexa72-raspberrypi4-64-toolchain-v1.2.1.sh"
-ARG JUCE_DOWNLOAD_URL="https://github.com/juce-framework/JUCE/releases/download/8.0.12/juce-8.0.12-linux.zip"
+ARG ELK_SDK_DOWNLOAD_URL="https://github.com/elk-audio/elkpi-sdk/releases/download/1.4.0/elk-glibc-x86_64-elkpi-audio-os-image-cortexa72-raspberrypi4-64-toolchain-v1.4.0.sh"
+ARG JUCE_DOWNLOAD_URL="https://github.com/juce-framework/JUCE/releases/download/9.0.4/juce-9.0.4-linux.zip"
 ARG ELK_SDK_BASEPATH=/SDKs/elkpi/
 ARG ELK_SDK_USR_SYSROOT=sysroots/cortexa72-elk-linux/usr
 
@@ -125,8 +125,12 @@ RUN git clone https://github.com/siemens/kas.git /opt/kas && \
     git checkout tags/4.7
 
 # Download and setup Elk SDK
+# The installer is published as two parts (.part.aa, .part.ab): download and join them
 WORKDIR /tmp
-RUN wget -O elkpi-sdk.sh $ELK_SDK_DOWNLOAD_URL && \
+RUN wget -O elkpi-sdk.sh.part.aa $ELK_SDK_DOWNLOAD_URL.part.aa && \
+    wget -O elkpi-sdk.sh.part.ab $ELK_SDK_DOWNLOAD_URL.part.ab && \
+    cat elkpi-sdk.sh.part.aa elkpi-sdk.sh.part.ab > elkpi-sdk.sh && \
+    rm -f elkpi-sdk.sh.part.aa elkpi-sdk.sh.part.ab && \
     chmod +x elkpi-sdk.sh && \
     /tmp/elkpi-sdk.sh -y -d $ELK_SDK_BASEPATH && \
     rm -f elkpi-sdk.sh
@@ -151,25 +155,13 @@ RUN wget -O juce.zip $JUCE_DOWNLOAD_URL && \
 # Apply patch to example CMake conf. for VST3 crosscompilation with Elk SDK
 WORKDIR /home/$USERNAME/examples/AudioPlugin
 RUN dos2unix CMakeLists.txt
-RUN patch CMakeLists.txt <<EOF
-@@ -21,7 +21,7 @@
- # included JUCE directly in your source tree (perhaps as a submodule), you'll need to tell CMake to
- # include that subdirectory as part of the build.
- 
--# find_package(JUCE CONFIG REQUIRED)        # If you've installed JUCE to your system
-+find_package(JUCE CONFIG REQUIRED)        # If you've installed JUCE to your system
- # or
- # add_subdirectory(JUCE)                    # If you've put JUCE in a subdirectory called JUCE
- 
-@@ -51,7 +51,8 @@
-     PLUGIN_MANUFACTURER_CODE Juce               # A four-character manufacturer id with at least one upper-case character
-     PLUGIN_CODE Dem0                            # A unique four-character plugin id with exactly one upper-case character
-                                                 # GarageBand 10.3 requires the first letter to be upper-case, and the remaining letters to be lower-case
--    FORMATS AU VST3 Standalone                  # The formats to build. Other valid formats are: AAX Unity VST AU AUv3
-+    FORMATS VST3                                # The formats to build. Other valid formats are: AAX Unity VST AU AUv3
-+    VST3_AUTO_MANIFEST FALSE
-     PRODUCT_NAME "Audio Plugin Example")        # The name of the final executable, which can differ from the target name
-EOF
+RUN sed -i \
+    -e 's|^# find_package(JUCE CONFIG REQUIRED)|find_package(JUCE CONFIG REQUIRED)|' \
+    -e 's|^\( *\)FORMATS AU VST3 Standalone .*|\1FORMATS VST3                                # The formats to build. Other valid formats are: AAX Unity VST AU AUv3\n\1VST3_AUTO_MANIFEST FALSE|' \
+    CMakeLists.txt && \
+    grep -q '^find_package(JUCE CONFIG REQUIRED)' CMakeLists.txt && \
+    grep -q '^ *FORMATS VST3 ' CMakeLists.txt && \
+    grep -q '^ *VST3_AUTO_MANIFEST FALSE' CMakeLists.txt
 
 RUN unix2dos CMakeLists.txt && \
     rm -f CMakeLists.txt.orig && \
